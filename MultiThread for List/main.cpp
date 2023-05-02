@@ -1,4 +1,4 @@
-#define _SOCKETAPI_
+ï»¿#define _SOCKETAPI_
 #include <windows.h>
 #include <stdio.h>
 #include <process.h>
@@ -56,14 +56,14 @@ bool Init(void)
 	hEventExitThread = CreateEvent(nullptr, true, false, L"EventExitThread");
 	if (hEventExitThread == nullptr)
 	{
-		printf("Exit ÀÌº¥Æ®°´Ã¼ »ı¼º ½ÇÆĞ: %d", GetLastError());
+		printf("Exit ì´ë²¤íŠ¸ê°ì²´ ìƒì„± ì‹¤íŒ¨: %d", GetLastError());
 		return false;
 	}
 
 	hEventSaveThread = CreateEvent(nullptr, false, false, L"EventSaveThread");
 	if (hEventSaveThread == nullptr)
 	{
-		printf("Save ÀÌº¥Æ®°´Ã¼ »ı¼º ½ÇÆĞ: %d\n", GetLastError());
+		printf("Save ì´ë²¤íŠ¸ê°ì²´ ìƒì„± ì‹¤íŒ¨: %d\n", GetLastError());
 		return false;
 	}
 
@@ -74,7 +74,7 @@ bool Init(void)
 	if (hPrintThread == nullptr)
 	{
 		SetEvent(hEventExitThread);
-		printf("PrintThread »ı¼º ½ÇÆĞ: %d\n", GetLastError());
+		printf("PrintThread ìƒì„± ì‹¤íŒ¨: %d\n", GetLastError());
 		return false;
 	}
 
@@ -82,7 +82,7 @@ bool Init(void)
 	if (hDeleteThread == nullptr)
 	{
 		SetEvent(hEventExitThread);
-		printf("DeleteThread »ı¼º ½ÇÆĞ: %d\n", GetLastError());
+		printf("DeleteThread ìƒì„± ì‹¤íŒ¨: %d\n", GetLastError());
 		return false;
 	}
 
@@ -90,7 +90,7 @@ bool Init(void)
 	if (hWorkerThread1 == nullptr)
 	{
 		SetEvent(hEventExitThread);
-		printf("WorkerThread1 »ı¼º ½ÇÆĞ: %d\n", GetLastError());
+		printf("WorkerThread1 ìƒì„± ì‹¤íŒ¨: %d\n", GetLastError());
 		return false;
 	}
 
@@ -98,7 +98,7 @@ bool Init(void)
 	if (hWorkerThread1 == nullptr)
 	{
 		SetEvent(hEventExitThread);
-		printf("WorkerThread2 »ı¼º ½ÇÆĞ: %d\n", GetLastError());
+		printf("WorkerThread2 ìƒì„± ì‹¤íŒ¨: %d\n", GetLastError());
 		return false;
 	}
 
@@ -106,7 +106,7 @@ bool Init(void)
 	if (hWorkerThread1 == nullptr)
 	{
 		SetEvent(hEventExitThread);
-		printf("WorkerThread3 »ı¼º ½ÇÆĞ: %d\n", GetLastError());
+		printf("WorkerThread3 ìƒì„± ì‹¤íŒ¨: %d\n", GetLastError());
 		return false;
 	}
 
@@ -114,7 +114,7 @@ bool Init(void)
 	if (hSaveThread == nullptr)
 	{
 		SetEvent(hEventExitThread);
-		printf("SaveThread »ı¼º ½ÇÆĞ: %d\n", GetLastError());
+		printf("SaveThread ìƒì„± ì‹¤íŒ¨: %d\n", GetLastError());
 		return false;
 	}
 
@@ -156,15 +156,15 @@ void MainThread(void)
 			}
 			else if (GetAsyncKeyState(VK_Q))
 			{
-				printf("½º·¹µå Á¾·á ½ÃÀÛ\n");
+				printf("ìŠ¤ë ˆë“œ ì¢…ë£Œ ì‹œì‘\n");
 				SetEvent(hEventExitThread);
 				result = WaitForMultipleObjects(TOTAL_THREAD_COUNT, hThreadArr, true, INFINITE);
 				if (result == WAIT_FAILED)
 				{
-					printf("Main ½º·¹µå ´Ù¸¥ ½º·¹µå Á¾·á ¿¡·¯¹ß»ı: %d\n", GetLastError());
+					printf("Main ìŠ¤ë ˆë“œ ë‹¤ë¥¸ ìŠ¤ë ˆë“œ ì¢…ë£Œ ì—ëŸ¬ë°œìƒ: %d\n", GetLastError());
 					break;
 				}
-				printf("½º·¹µå Á¾·á ¿Ï·á\n");
+				printf("ìŠ¤ë ˆë“œ ì¢…ë£Œ ì™„ë£Œ\n");
 				break;
 			}
 		}
@@ -182,13 +182,13 @@ unsigned _stdcall PrintThread(void* args)
 		switch (result)
 		{
 		case WAIT_OBJECT_0:
-			printf("Print ½º·¹µå Á¾·á\n");
+			printf("Print ìŠ¤ë ˆë“œ ì¢…ë£Œ\n");
 			return 0;
 		case WAIT_TIMEOUT:
 		{
 			AcquireSRWLockShared(&lock);
 			std::list<int>::iterator iter = gList.begin();
-			printf("Ãâ·Â: ");
+			printf("ì¶œë ¥: ");
 			for (; iter != gList.end(); ++iter)
 			{
 				printf("%d ", *iter);
@@ -198,7 +198,7 @@ unsigned _stdcall PrintThread(void* args)
 			continue;
 		}
 		case WAIT_FAILED:
-			printf("Print ½º·¹µå Á¾·á ÀÌº¥Æ® ¿¡·¯¹ß»ı: %d\n", GetLastError());
+			printf("Print ìŠ¤ë ˆë“œ ì¢…ë£Œ ì´ë²¤íŠ¸ ì—ëŸ¬ë°œìƒ: %d\n", GetLastError());
 		}
 		break;
 	}
@@ -214,7 +214,7 @@ unsigned _stdcall DeleteThread(void* args)
 		switch (result)
 		{
 		case WAIT_OBJECT_0:
-			printf("Delete ½º·¹µå Á¾·á\n");
+			printf("Delete ìŠ¤ë ˆë“œ ì¢…ë£Œ\n");
 			return 0;
 		case WAIT_TIMEOUT:
 			AcquireSRWLockExclusive(&lock);
@@ -225,7 +225,7 @@ unsigned _stdcall DeleteThread(void* args)
 			ReleaseSRWLockExclusive(&lock);
 			continue;
 		case WAIT_FAILED:
-			printf("Delete ½º·¹µå Á¾·á ÀÌº¥Æ® ¿¡·¯¹ß»ı: %d\n", GetLastError());
+			printf("Delete ìŠ¤ë ˆë“œ ì¢…ë£Œ ì´ë²¤íŠ¸ ì—ëŸ¬ë°œìƒ: %d\n", GetLastError());
 		}
 		break;
 	}
@@ -243,7 +243,7 @@ unsigned _stdcall WorkerThread(void* args)
 		switch (result)
 		{
 		case WAIT_OBJECT_0:
-			printf("Worker ½º·¹µå%d Á¾·á\n", threadIndex);
+			printf("Worker ìŠ¤ë ˆë“œ%d ì¢…ë£Œ\n", threadIndex);
 			return 0;
 		case WAIT_TIMEOUT:
 			AcquireSRWLockExclusive(&lock);
@@ -251,7 +251,7 @@ unsigned _stdcall WorkerThread(void* args)
 			ReleaseSRWLockExclusive(&lock);
 			continue;
 		case WAIT_FAILED:
-			printf("Worker ½º·¹µå%d Á¾·á ÀÌº¥Æ® ¿¡·¯¹ß»ı: %d\n", threadIndex, GetLastError());
+			printf("Worker ìŠ¤ë ˆë“œ%d ì¢…ë£Œ ì´ë²¤íŠ¸ ì—ëŸ¬ë°œìƒ: %d\n", threadIndex, GetLastError());
 		}
 		break;
 	}
@@ -268,11 +268,11 @@ unsigned _stdcall SaveThread(void* args)
 		switch (result)
 		{
 		case WAIT_EXIT_EVENT:
-			printf("Save ½º·¹µå Á¾·á\n");
+			printf("Save ìŠ¤ë ˆë“œ ì¢…ë£Œ\n");
 			return 0;
 		case WAIT_SAVE_EVENT:
 		{
-			printf("ÆÄÀÏ ÀúÀå¿äÃ»\n");
+			printf("íŒŒì¼ ì €ì¥ìš”ì²­\n");
 			int fileSize = 0;
 			char* buffer = nullptr;
 			AcquireSRWLockShared(&lock);
@@ -293,7 +293,7 @@ unsigned _stdcall SaveThread(void* args)
 			errno_t result;
 			if (result = fopen_s(&pFile, "integer_list.txt", "wb"))
 			{
-				printf("ÆÄÀÏ ¿­±â ½ÇÆĞ wr ¸ğµå ¿¡·¯ÄÚµå: %d\n", result);
+				printf("íŒŒì¼ ì—´ê¸° ì‹¤íŒ¨ wr ëª¨ë“œ ì—ëŸ¬ì½”ë“œ: %d\n", result);
 				continue;
 			}
 
@@ -313,7 +313,7 @@ unsigned _stdcall SaveThread(void* args)
 			continue;
 		}
 		case WAIT_FAILED:
-			printf("Save ½º·¹µå ¿¡·¯¹ß»ı: %d\n", GetLastError());
+			printf("Save ìŠ¤ë ˆë“œ ì—ëŸ¬ë°œìƒ: %d\n", GetLastError());
 		}
 		break;
 	}
