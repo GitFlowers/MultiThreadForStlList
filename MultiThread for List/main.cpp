@@ -275,7 +275,7 @@ unsigned _stdcall SaveThread(void* args)
 			printf("파일 저장요청\n");
 			int fileSize = 0;
 			char* buffer = nullptr;
-			AcquireSRWLockShared(&lock);
+			
 			if (fopen_s(&pFile, "integer_list.txt", "rb") == 0)
 			{
 				fseek(pFile, 0, SEEK_END);
@@ -302,6 +302,7 @@ unsigned _stdcall SaveThread(void* args)
 				fwrite(buffer, fileSize, 1, pFile);
 			}
 			
+			AcquireSRWLockShared(&lock);
 			std::list<int>::iterator iter = gList.begin();
 			for (; iter != gList.end(); ++iter)
 			{
